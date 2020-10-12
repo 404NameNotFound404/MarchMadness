@@ -27,9 +27,6 @@ for i in range(len(mid_array)):
     if toAdd != [] and len(toAdd) == 4:
         final_array.append(toAdd)
 
-
-
-
 print(final_array)
 
 teams = {}
