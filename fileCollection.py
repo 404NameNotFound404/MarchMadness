@@ -10,6 +10,7 @@ soup = BeautifulSoup(page.content, 'lxml')
 
 table = soup.find("pre").text
 print(table)
+game = []
 
 mid_array = table.split("\n")
 final_array = []
