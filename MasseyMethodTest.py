@@ -1,6 +1,8 @@
 import unittest
 import numpy as np
 
+import MasseyMethod
+
 class MasseyMethodTest(unittest.TestCase):
     a = np.matrix([[0, 0, 1, 0, -1], [-1, 1, 0, 0, 0], [0, 1, 0, 0, -1], \
     [-1, 0, 0, 1, 0], [0, 0, -1, 1, 0], [1, 0, 0, 0, -1], \
@@ -34,4 +36,4 @@ class MasseyMethodTest(unittest.TestCase):
 
     def test_setRankings(self):
         actual_rankings = setRankings(solve(a, y))
-        self.assertEqual(actual_rankings, rankings)
+        self.assertEqual(actual_rankings.keys(), rankings)

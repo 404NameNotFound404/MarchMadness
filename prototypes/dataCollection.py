@@ -45,7 +45,7 @@ with open('/Users/katiemendel1/Desktop/MarchMadness/misc-files/mcb2019CSV.csv', 
 #print(len(teams.values()))
 #print(y)
 #print(games)
-
+print(teams)
 #print(games)
 
 ## MASSEY ###########################
