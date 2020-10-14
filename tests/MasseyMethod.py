@@ -1,4 +1,5 @@
 import numpy as np
+import collections
 
 class MasseyMethod:
 
@@ -30,11 +31,15 @@ class MasseyMethod:
     def setRankings(self, teams, result):
         i = 0
         sorted_teams = {}
-        for name in teams.values():
+        for name in teams.keys():
             sorted_teams[name] = result[i]
             i += 1
 
+        #print(sorted_teams)
+        #sorted_dict = collections.OrderedDict(sorted_teams)
         #sorted_teams = sorted(sorted_teams.items(), key=lambda x: x[1], reverse=True)
+        sorted_teams = {k: v for k, v in sorted(sorted_teams.items(), key=lambda item: item[1], reverse=True)}
+        #print(sorted_teams)
         return sorted_teams
 
 """a = np.matrix([[0, 0, 1, 0, -1], [-1, 1, 0, 0, 0], [0, 1, 0, 0, -1], \
