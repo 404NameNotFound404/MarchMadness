@@ -4,7 +4,7 @@ import numpy as np
 import MasseyMethod
 
 class MasseyMethodTest(unittest.TestCase):
-
+    
     def testMethodLeftSide(self):
         a = np.array([[0, 0, 1, 0, -1], [-1, 1, 0, 0, 0], [0, 1, 0, 0, -1], \
         [-1, 0, 0, 1, 0], [0, 0, -1, 1, 0], [1, 0, 0, 0, -1], \

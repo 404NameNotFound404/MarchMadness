@@ -30,10 +30,7 @@ class MasseyMethod:
     setRankings(self, teams, result):
         Rank the results from solve.
     """
-
-    a = 0
-    y = 0
-    teams = {}
+    __slots__ = ['a', 'y', 'teams']
 
     def __init__(self, left_side, right_side, t):
         '''
@@ -113,6 +110,3 @@ class MasseyMethod:
         sorted_teams = {k: v for k, v in sorted(sorted_teams.items(), key=lambda item: item[1], reverse=True)}
 
         return sorted_teams
-
-help(MasseyMethod)
-print(MasseyMethod.setRankings.__doc__)

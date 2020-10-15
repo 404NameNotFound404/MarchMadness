@@ -5,11 +5,12 @@ import re
 # open file in read mode
 
 class DataCollection:
-
-    games
-    teams
-    difference
-    numTeams
+    count = 0
+    rows = 0
+    games = []
+    teams = {}
+    difference = []
+    numTeams = 0
 
     def __init__(self, numTeams):
         count = 0
