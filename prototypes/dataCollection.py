@@ -11,7 +11,7 @@ rows = 0
 games = []
 y = [] * 648
 
-with open('/Users/katiemendel1/Desktop/MarchMadness/misc-files/mcb2019CSV.csv', 'r') as read_obj:
+with open('../misc-files/mcb2019CSV.csv', 'r') as read_obj:
     # pass the file object to reader() to get the reader object
     csv_reader = reader(read_obj)
     # Iterate over each row in the csv using reader object
