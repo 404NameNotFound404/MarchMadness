@@ -6,7 +6,7 @@ import re
 
 class DataCollection:
 
-     """
+    """
     A class to load a file to be used by the MassyMethod class.
 
     ...
@@ -41,7 +41,7 @@ class DataCollection:
     getters()
         There are getters for the instance variables.
     """
-
+    
     count = 0
     rows = 0
     games = []
@@ -50,6 +50,12 @@ class DataCollection:
     numTeams = 0
 
     def __init__(self, numTeams):
+        '''
+        Constructor for DataCollection class
+
+            Parameters:
+                    numTeams (int): Number of unique teams from file
+        '''
         count = 0
         rows = 0
         self.games = []
@@ -58,7 +64,13 @@ class DataCollection:
 
 
     def readFile(self, file_path):
+        '''
+        Read information from specified csv file and put information into corresponding instance variables.
 
+            Parameters:
+                    file_path (String): Location of csv file containing information on games played between teams to be ranked. Each game is stored
+                        in a separate row contining date, team names and points for each team
+        '''
         with open(file_path, 'r') as read_obj:
             # pass the file object to reader() to get the reader object
             csv_reader = reader(read_obj)
@@ -94,15 +106,40 @@ class DataCollection:
 
 
     def getTeams(self):
+        '''
+        Accessor method to get teams represented in the specified file along with index information in games array.
+
+            Returns:
+                    teams (dict): Dictionary containing each unique team name as key and index in games array as value.
+        '''
         return self.teams
 
     def getDifference(self):
+        '''
+        Accessor method to get score differentials for each game.
+
+            Returns:
+                    difference (np.array): Array containing the score differential in each game.
+        '''
         return self.difference
 
     def getGames(self):
-        return self.geams
+        '''
+        Accessor method to get game array representation for the input file.
+
+            Returns:
+                    games (np.array): Array containing win information for each game. Each row represents a game with 1 in the winning team column,
+                        -1 in the losing team column and 0 in all other columns. 
+        '''
+        return self.games
 
     def getNumTeams(self):
+        '''
+        Accessor method to get number of teams.
+
+            Returns:
+                    numTeams (int): Number of unique teams in the input file.
+        '''
         return self.numTeams
 
 
