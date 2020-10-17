@@ -42,28 +42,31 @@ class DataCollection:
         There are getters for the instance variables.
     """
     
-    count = 0
+    #count = 0
     rows = 0
     games = []
     teams = {}
     difference = []
     numTeams = 0
+    file = ''
 
-    def __init__(self, numTeams):
+    def __init__(self, file_name, num_teams):
         '''
         Constructor for DataCollection class
 
             Parameters:
                     numTeams (int): Number of unique teams from file
         '''
-        count = 0
-        rows = 0
         self.games = []
         self.teams = {}
-        self.difference = [] * numTeams
+        self.difference = []
+        self.numTeams = num_teams
+        self.file = file_name
+
+        self.readFile(file_name, num_teams)
 
 
-    def readFile(self, file_path):
+    def readFile(self, file_path, numTeams):
         '''
         Read information from specified csv file and put information into corresponding instance variables.
 
@@ -74,6 +77,7 @@ class DataCollection:
         with open(file_path, 'r') as read_obj:
             # pass the file object to reader() to get the reader object
             csv_reader = reader(read_obj)
+            count = 0
             # Iterate over each row in the csv using reader object
             for row in csv_reader:
                 assert(len(row) == 5)
@@ -82,7 +86,6 @@ class DataCollection:
                 differential = 0
                 team_name = ''
                 for x in [1, 3]:
-                    rows += 1
                     differential = int(row[2])-int(row[4])
                     #populate dictionary of team names
                     team_name = re.sub('@', '', row[x])
@@ -96,11 +99,10 @@ class DataCollection:
                 else:
                     g[self.teams.get(team_name)] = 1
                     g[self.teams.get(re.sub('@', '', row[1]))] = -1
-                    print(team_name)
-                    print(re.sub('@', '', row[1]))
+                    #print(re.sub('@', '', row[1]))
                 self.games.append(g)
                 self.difference.append(abs(differential))
-
+            
             self.games = np.array(self.games)
             self.difference = np.array(self.difference)
 

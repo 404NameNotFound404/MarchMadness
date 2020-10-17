@@ -1,11 +1,12 @@
 import unittest
-import dataCollection
+import DataCollection
+import numpy as np
 
-class TestDataCollection(unittest.TestCase):
+class testDataCollection(unittest.TestCase):
+	def setUp(self):
+		self.dc = DataCollection.DataCollection('../misc-files/mcb2019CSV-Less.csv', 200)
 
-	def test_teams(self):
-		dc = dataCollection.DataCollection('../misc-files/mcb2019CSV-Less.csv')
-		teamsDict = {'South Florida': 0, 'Alabama A&M': 1, 'Iowa St': 2, 'Alabama St': 3, 'Tulsa': 4, 'Alcorn St': 5, 
+		self.teamsDict = {'South Florida': 0, 'Alabama A&M': 1, 'Iowa St': 2, 'Alabama St': 3, 'Tulsa': 4, 'Alcorn St': 5, 
 		'Appalachian St': 6, 'Mars Hill': 7, 'Austin Peay': 8, 'Oakland City': 9, 'Ball St': 10, 'Indiana St': 11, 
 		'Cornell': 12, 'Binghamton': 13, 'Boston College': 14, 'WI Milwaukee': 15, 'Boston Univ': 16, 'Northeastern': 17, 
 		'Bowling Green': 18, 'Tiffin': 19, 'Buffalo': 20, 'St Francis PA': 21, 'Campbell': 22, 'UNC Wilmington': 23, 
@@ -38,13 +39,19 @@ class TestDataCollection(unittest.TestCase):
 		'Oregon': 190, 'Portland St': 191, 'San Diego': 192, 'Weber St': 193, 'UT Arlington': 194, 'UT Tyler': 195, 
 		'Army': 196, 'Marist': 197, 'Northwestern LA': 198, 'Centenary': 199}
 
-		self.assertEqual(teamsDict, dc.teams)
-
-	def test_differenceScores(self):
-		dc = dataCollection.DataCollection('../misc-files/mcb2019CSV-Less.csv')
-		scoreDifference = [17, 26, 17, 63, 61, 17, 11, 20, 3, 39, 15, 4, 13, 7, 20, 3, 13, 12, 28, 32, 8, 12, 1, 41, 5, 3, 
+		self.scoreDifference = [17, 26, 17, 63, 61, 17, 11, 20, 3, 39, 15, 4, 13, 7, 20, 3, 13, 12, 28, 32, 8, 12, 1, 41, 5, 3, 
 		12, 18, 17, 50, 22, 24, 45, 8, 8, 19, 50, 17, 54, 17, 11, 13, 27, 16, 21, 40, 31, 7, 18, 56, 8, 16, 34, 22, 13, 13, 
 		30, 23, 34, 13, 25, 43, 3, 33, 15, 5, 13, 21, 25, 15, 28, 29, 9, 10, 16, 10, 28, 20, 11, 12, 25, 34, 21, 8, 31, 23, 
 		8, 22, 10, 33, 3, 6, 44, 20, 28, 27, 17, 24, 4, 40]
 
-		self.assertEqual(scoreDifference, dc.difference)
+		self.maxDiff = None
+
+	def test_teams(self):
+		self.assertEqual(len(self.teamsDict), self.dc.getNumTeams())
+		
+		for team in self.teamsDict.keys():
+			self.assertTrue(team in self.dc.getTeams().keys())
+
+	def test_differenceScores(self):
+		for i in range(len(self.dc.getDifference())):
+			self.assertEqual(self.scoreDifference[i], self.dc.getDifference()[i])
