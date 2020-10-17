@@ -117,6 +117,13 @@ class MasseyMethod:
         return sorted_teams
 
     def runMethod(self):
-        return self.setRankings(self.teams, self.solve(self.methodLeftSide(self.a), self.methodRightSide(self.a, self.y)))
+        '''
+        Run Massey Method end-to-end using the instance fields and return sorted dictionary
+
+            Returns:
+                    final_rankings (dict): A dictionary sorted by highest rank to lowest rank
+        '''
+        final_rankings = self.setRankings(self.teams, self.solve(self.methodLeftSide(self.a), self.methodRightSide(self.a, self.y)))
+        return final_rankings
 
     
