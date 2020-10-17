@@ -31,6 +31,7 @@ class MasseyMethod:
         Rank the results from solve.
     """
     __slots__ = ['a', 'y', 'teams']
+    
 
     def __init__(self, left_side, right_side, t):
         '''
@@ -44,6 +45,11 @@ class MasseyMethod:
         self.a = left_side
         self.y = right_side
         self.teams = t
+
+        """
+        results = self.solve(self.methodLeftSide(self.a), self.methodRightSide(self.a, self.y))
+        self.setRankings(self.teams, results)
+        """
 
     def methodLeftSide(self, a):
         '''
@@ -108,5 +114,9 @@ class MasseyMethod:
             i += 1
 
         sorted_teams = {k: v for k, v in sorted(sorted_teams.items(), key=lambda item: item[1], reverse=True)}
-
         return sorted_teams
+
+    def runMethod(self):
+        return self.setRankings(self.teams, self.solve(self.methodLeftSide(self.a), self.methodRightSide(self.a, self.y)))
+
+    

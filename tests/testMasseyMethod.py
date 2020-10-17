@@ -1,7 +1,7 @@
 import unittest
 import numpy as np
 
-import tests.MasseyMethod
+import MasseyMethod
 
 class MasseyMethodTest(unittest.TestCase):
 
@@ -27,7 +27,7 @@ class MasseyMethodTest(unittest.TestCase):
 
         self.teams = {"J": 1, "F": 2, "G": 3, "D": 4, "M": 5}
 
-        self.mas = tests.MasseyMethod.MasseyMethod(self.a, self.y, self.teams)
+        self.mas = MasseyMethod.MasseyMethod(self.a, self.y, self.teams)
     
     def testMethodLeftSide(self):
 
