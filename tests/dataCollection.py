@@ -5,6 +5,43 @@ import re
 # open file in read mode
 
 class DataCollection:
+
+     """
+    A class to load a file to be used by the MassyMethod class.
+
+    ...
+
+    Attributes
+    ----------
+    a : np.array
+        An array that contains a row for each game played with 1 in winning team column and -1 in losing team column
+    
+    games : np.array
+        An array with the teams and has information on what team won a game
+
+    teams : np.array
+        An array with the names of every team
+
+    difference : np.array
+        An array that has the difference in scores of every game
+
+    numTeams : int
+        The number of teams in the file
+
+
+
+    Methods
+    -------
+    __init__(numTeams):
+        Sets instance variables.
+
+    readFile(file_path):
+        Reads file of games and sets games, teams and difference variables.
+
+    getters()
+        There are getters for the instance variables.
+    """
+
     count = 0
     rows = 0
     games = []
