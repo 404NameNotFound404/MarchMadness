@@ -23,9 +23,9 @@ class MasseyMethodTest(unittest.TestCase):
 
         self.results = np.array([-8, 6.4, 3, 20.6, -22])
 
-        self.rankings = ["J", "F", "G", "D", "M"]
+        self.rankings = {"J": 1,"F": 2, "G": 3, "D": 4, "M": 5}
 
-        self.teams = {"J": 1, "F": 2, "G": 3, "D": 4, "M": 5}
+        self.teams = {"D": 1, "F": 2, "G": 3, "J": 4, "M": 5}
 
         self.mas = MasseyMethod.MasseyMethod(self.a, self.y, self.teams)
     
@@ -41,18 +41,13 @@ class MasseyMethodTest(unittest.TestCase):
 
     def testSetRankings(self):
 
-        rankings = {"J": 1,"F": 2, "G": 3, "D": 4, "M": 5}
-        teams = {"D": 1,"F": 2, "G": 3, "J": 4, "M": 5}
-
-        # mas = tests.MasseyMethod.MasseyMethod(a, y, teams)
-        actual_rankings = self.mas.setRankings(teams, (self.mas.solve(self.mas.methodLeftSide(self.a), self.mas.methodRightSide(self.a, self.y))))
-        #print(actual_rankings)
+        actual_rankings = self.mas.setRankings(self.teams, (self.mas.solve(self.mas.methodLeftSide(self.a), self.mas.methodRightSide(self.a, self.y))))
 
         index1 = 0
         index2 = 0
         for team1 in actual_rankings.keys():
             index1 += 1
-            for team2 in rankings.keys():
+            for team2 in self.rankings.keys():
                 index2 +=1 
                 if(index1 == index2):
                     self.assertEqual(team1, team2)
@@ -60,4 +55,9 @@ class MasseyMethodTest(unittest.TestCase):
     def testSolve(self):
         actual_result = self.mas.solve(self.mas.methodLeftSide(self.a), self.mas.methodRightSide(self.a, self.y))
         self.assertEqual(actual_result.all(), self.results.all())
+
+    def testRunMethod(self):
+        final_rankings = self.mas.runMethod()
+        self.assertEqual(final_rankings, self.rankings)
+
     

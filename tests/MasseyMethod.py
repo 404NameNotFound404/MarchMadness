@@ -29,6 +29,9 @@ class MasseyMethod:
 
     setRankings(self, teams, result):
         Rank the results from solve.
+
+    runMethod():
+        Calculates and returns rankings for preloaded data.
     """
     __slots__ = ['a', 'y', 'teams']
     
@@ -124,6 +127,12 @@ class MasseyMethod:
                     final_rankings (dict): A dictionary sorted by highest rank to lowest rank
         '''
         final_rankings = self.setRankings(self.teams, self.solve(self.methodLeftSide(self.a), self.methodRightSide(self.a, self.y)))
+
+        count = 1
+        for team in final_rankings.keys():
+            final_rankings[team] = count
+            count += 1
+        
         return final_rankings
 
     

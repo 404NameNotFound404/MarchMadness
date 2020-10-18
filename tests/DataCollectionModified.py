@@ -93,7 +93,7 @@ class DataCollectionModified:
                         self.teams[team_name] = count
                         count += 1
                 
-                #
+                #MODIFY HERE FOR HOME TEAM ADVANTAGE
 
                 if differential > 0:
                     g[self.teams.get(team_name)] = -1
