@@ -30,7 +30,6 @@ class testDriver(unittest.TestCase):
         self.whitepaper = Driver.Driver('/Users/katiemendel1/Desktop/MarchMadness/misc-files/whitepaper-example.csv', 5)
     
     def test_getResultsLength(self):
-        print(self.whitepaper.getFileName())
         self.assertEqual(len(self.whitepaper.getResults().keys()), 5)
 
     def test_getResultsContent(self):

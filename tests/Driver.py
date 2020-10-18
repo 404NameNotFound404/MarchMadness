@@ -3,11 +3,31 @@ import MasseyMethod
 import DataCollection
 
 class Driver:
+    """
+    A class to solve a system of equations using the Massey Method reading information from a file using DataCollection.
 
+    ...
+
+    Attributes
+    ----------
+    results : dict
+        Ranked results with team name as key and ranking as value.
+
+    Methods
+    -------
+    getResults():
+        Calculates and returns rankings for data in specified file.
+    """
     results = {}
-    fileName = ""
 
     def __init__(self, file_name, num_teams):
+        '''
+        Constructor for Driver class
+
+            Parameters:
+                    file_name (String): file path to csv containing game information
+                    num_teams (int): the number of unique team names contained in file at location file_name
+        '''
         self.fileName = file_name
         data = DataCollection.DataCollection(file_name, num_teams)
 
@@ -19,10 +39,13 @@ class Driver:
             self.results[str(team)] = counter
 
     def getResults(self):
-        return self.results
+        '''
+        Returns results of Massey method rankings
 
-    def getFileName(self):
-        return self.fileName
+            Returns:
+                    results (dict) : Calculates and returns rankings for data in specified file.
+        '''
+        return self.results
     
 
 
