@@ -28,6 +28,10 @@ class DataCollection:
     numTeams : int
         The number of teams in the file
 
+    file : String
+        Filepath to csv containing game information.
+
+
 
 
     Methods
@@ -38,12 +42,19 @@ class DataCollection:
     readFile(file_path):
         Reads file of games and sets games, teams and difference variables.
 
-    getters()
-        There are getters for the instance variables.
+    getTeams():
+        Accessor method to get teams represented in the specified file along with index information in games array.
+
+    getDifference():
+        Accessor method to get score differentials for each game.
+
+    getGames():
+        Accessor method to get game array representation for the input file.
+
+    getNumTeams():
+        Accessor method to get number of teams.
     """
     
-    #count = 0
-    rows = 0
     games = []
     teams = {}
     difference = []
