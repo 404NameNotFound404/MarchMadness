@@ -4,10 +4,10 @@ import numpy as np
 
 class testDataCollection(unittest.TestCase):
 	def setUp(self):
-		self.dc = DataCollection.DataCollection('../misc-files/mcb2019CSV-Less.csv', 200)
+		self.short_csv = DataCollection.DataCollection('../misc-files/mcb2019CSV-Less.csv', 200)
 		self.whitepaper_data = DataCollection.DataCollection('/Users/katiemendel1/Desktop/MarchMadness/misc-files/whitepaper-example.csv', 5)
 
-		self.teamsDict = {'South Florida': 0, 'Alabama A&M': 1, 'Iowa St': 2, 'Alabama St': 3, 'Tulsa': 4, 'Alcorn St': 5, 
+		self.teams_dict = {'South Florida': 0, 'Alabama A&M': 1, 'Iowa St': 2, 'Alabama St': 3, 'Tulsa': 4, 'Alcorn St': 5, 
 		'Appalachian St': 6, 'Mars Hill': 7, 'Austin Peay': 8, 'Oakland City': 9, 'Ball St': 10, 'Indiana St': 11, 
 		'Cornell': 12, 'Binghamton': 13, 'Boston College': 14, 'WI Milwaukee': 15, 'Boston Univ': 16, 'Northeastern': 17, 
 		'Bowling Green': 18, 'Tiffin': 19, 'Buffalo': 20, 'St Francis PA': 21, 'Campbell': 22, 'UNC Wilmington': 23, 
@@ -40,7 +40,7 @@ class testDataCollection(unittest.TestCase):
 		'Oregon': 190, 'Portland St': 191, 'San Diego': 192, 'Weber St': 193, 'UT Arlington': 194, 'UT Tyler': 195, 
 		'Army': 196, 'Marist': 197, 'Northwestern LA': 198, 'Centenary': 199}
 
-		self.scoreDifference = np.array([17, 26, 17, 63, 61, 17, 11, 20, 3, 39, 15, 4, 13, 7, 20, 3, 13, 12, 28, 32, 8, 12, 1, 41, 5, 3, 
+		self.score_difference = np.array([17, 26, 17, 63, 61, 17, 11, 20, 3, 39, 15, 4, 13, 7, 20, 3, 13, 12, 28, 32, 8, 12, 1, 41, 5, 3, 
 		12, 18, 17, 50, 22, 24, 45, 8, 8, 19, 50, 17, 54, 17, 11, 13, 27, 16, 21, 40, 31, 7, 18, 56, 8, 16, 34, 22, 13, 13, 
 		30, 23, 34, 13, 25, 43, 3, 33, 15, 5, 13, 21, 25, 15, 28, 29, 9, 10, 16, 10, 28, 20, 11, 12, 25, 34, 21, 8, 31, 23, 
 		8, 22, 10, 33, 3, 6, 44, 20, 28, 27, 17, 24, 4, 40])
@@ -56,31 +56,47 @@ class testDataCollection(unittest.TestCase):
 
 		self.wp_y = np.array([32, 8, 25, 49, 14, 7, 10, 2, 42, 7])
 
-	def test_teamContent(self):		
-		for team in self.teamsDict.keys():
-			self.assertTrue(team in self.dc.getTeams().keys())
+	def test_team_content(self):		
+		for team in self.teams_dict.keys():
+			self.assertTrue(team in self.short_csv.get_teams().keys())
 
 		for team in self.wp_teams.keys():
-			self.assertTrue(team in self.whitepaper_data.getTeams().keys())
+			self.assertTrue(team in self.whitepaper_data.get_teams().keys())
 
-	def test_teamsLength(self):
-		self.assertEqual(len(self.teamsDict), self.dc.getNumTeams())
-		self.assertEqual(len(self.wp_teams), self.whitepaper_data.getNumTeams())
+	def test_teams_length(self):
+		self.assertEqual(len(self.teams_dict), self.short_csv.get_num_teams())
+		self.assertEqual(len(self.wp_teams), self.whitepaper_data.get_num_teams())
 
-	def test_differenceLength(self):
-		self.assertEqual(len(self.scoreDifference), len(self.dc.getDifference()))
+	def test_difference_length(self):
+		self.assertEqual(len(self.score_difference), len(self.short_csv.get_difference()))
 
-	def test_differenceContent(self):
-		self.assertEqual(self.scoreDifference.all(), self.dc.getDifference().all())
+	def test_difference_content(self):
+		self.assertEqual(self.score_difference.all(), self.short_csv.get_difference().all())
 
-		self.assertEqual(self.wp_y.all(), self.whitepaper_data.getDifference().all())
+		self.assertEqual(self.wp_y.all(), self.whitepaper_data.get_difference().all())
 
-	def test_gameLength(self):
-		self.assertEqual(len(self.wp_games), len(self.whitepaper_data.getGames()))
+	def test_game_length(self):
+		self.assertEqual(len(self.wp_games), len(self.whitepaper_data.get_games()))
 
-	def test_gameContent(self):
-		self.assertEqual(self.wp_games.all(), self.whitepaper_data.getGames().all())
+	def test_game_content(self):
+		self.assertEqual(self.wp_games.all(), self.whitepaper_data.get_games().all())
 		iowa_vs_alabama = [0] * 200
-		iowa_vs_alabama[self.teamsDict['Iowa St']] = 1
-		iowa_vs_alabama[self.teamsDict['Alabama St']] = -1
-		self.assertEqual(self.dc.getGames()[1].all(), np.array(iowa_vs_alabama).all())
+		iowa_vs_alabama[self.teams_dict['Iowa St']] = 1
+		iowa_vs_alabama[self.teams_dict['Alabama St']] = -1
+		self.assertEqual(self.short_csv.get_games()[1].all(), np.array(iowa_vs_alabama).all())
+
+		for game in self.short_csv.get_games():
+			count_win = 0
+			count_loss = 0
+			for entry in game:
+				if(entry == 1):
+					count_win += 1
+				elif(entry == -1):
+					count_loss += 1
+				else:
+					self.assertEqual(entry, 0)
+
+			self.assertTrue(count_win == 1)
+			self.assertTrue(count_loss == 1)
+
+		

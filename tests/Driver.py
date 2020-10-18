@@ -15,12 +15,12 @@ class Driver:
 
     Methods
     -------
-    getResults():
+    get_results():
         Calculates and returns rankings for data in specified file.
     """
     results = {}
 
-    def __init__(self, file_name, num_teams):
+    def __init__(self, file_name_p, num_teams_p):
         '''
         Constructor for Driver class
 
@@ -28,17 +28,17 @@ class Driver:
                     file_name (String): file path to csv containing game information
                     num_teams (int): the number of unique team names contained in file at location file_name
         '''
-        self.fileName = file_name
-        data = DataCollection.DataCollection(file_name, num_teams)
+        self.fileName = file_name_p
+        data = DataCollection.DataCollection(file_name_p, num_teams_p)
 
-        massey = MasseyMethod.MasseyMethod(data.getGames(), data.getDifference(), data.getTeams())
+        massey = MasseyMethod.MasseyMethod(data.get_games(), data.get_difference(), data.get_teams())
 
         counter = 0
-        for team in massey.runMethod():
+        for team in massey.run_method():
             counter += 1
             self.results[str(team)] = counter
 
-    def getResults(self):
+    def get_results(self):
         '''
         Returns results of Massey method rankings
 

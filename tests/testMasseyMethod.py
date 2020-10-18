@@ -27,21 +27,21 @@ class testMasseyMethod(unittest.TestCase):
 
         self.teams = {"D": 1, "F": 2, "G": 3, "J": 4, "M": 5}
 
-        self.mas = MasseyMethod.MasseyMethod(self.a, self.y, self.teams)
+        self.massey = MasseyMethod.MasseyMethod(self.a, self.y, self.teams)
     
     def testMethodLeftSide(self):
 
-        actual_left_side = self.mas.methodLeftSide(self.a)
+        actual_left_side = self.massey.method_left_side(self.a)
         self.assertEqual(actual_left_side.all(), self.at_a.all())
 
     def testMethodRightSide(self):
 
-        actual_right_side = self.mas.methodRightSide(self.a, self.y)
+        actual_right_side = self.massey.method_right_side(self.a, self.y)
         self.assertEqual(actual_right_side.all(), self.at_y.all())
 
     def testSetRankings(self):
 
-        actual_rankings = self.mas.setRankings(self.teams, (self.mas.solve(self.mas.methodLeftSide(self.a), self.mas.methodRightSide(self.a, self.y))))
+        actual_rankings = self.massey.set_rankings(self.teams, (self.massey.solve(self.massey.method_left_side(self.a), self.massey.method_right_side(self.a, self.y))))
 
         index1 = 0
         index2 = 0
@@ -53,11 +53,11 @@ class testMasseyMethod(unittest.TestCase):
                     self.assertEqual(team1, team2)
 
     def testSolve(self):
-        actual_result = self.mas.solve(self.mas.methodLeftSide(self.a), self.mas.methodRightSide(self.a, self.y))
+        actual_result = self.massey.solve(self.massey.method_left_side(self.a), self.massey.method_right_side(self.a, self.y))
         self.assertEqual(actual_result.all(), self.results.all())
 
     def testRunMethod(self):
-        final_rankings = self.mas.runMethod()
+        final_rankings = self.massey.run_method()
         self.assertEqual(final_rankings, self.rankings)
 
     
