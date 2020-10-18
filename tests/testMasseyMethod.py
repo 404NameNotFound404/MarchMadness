@@ -3,7 +3,7 @@ import numpy as np
 
 import MasseyMethod
 
-class MasseyMethodTest(unittest.TestCase):
+class testMasseyMethod(unittest.TestCase):
 
 
     def setUp(self):
