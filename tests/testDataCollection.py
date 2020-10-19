@@ -1,11 +1,12 @@
 import unittest
 import tests.DataCollection
+import data
 import numpy as np
 
 class testDataCollection(unittest.TestCase):
 	def setUp(self):
-		self.short_csv = tests.DataCollection.DataCollection('./data/mcb2019CSV-Less.csv', 200)
-		self.whitepaper_data = tests.DataCollection.DataCollection('data/whitepaper-example.csv', 5)
+		self.short_csv = tests.DataCollection.DataCollection('tests/data/mcb2019CSV-Less.csv', 200)
+		self.whitepaper_data = tests.DataCollection.DataCollection('tests/data/whitepaper-example.csv', 5)
 
 		self.teams_dict = {'South Florida': 0, 'Alabama A&M': 1, 'Iowa St': 2, 'Alabama St': 3, 'Tulsa': 4, 'Alcorn St': 5, 
 		'Appalachian St': 6, 'Mars Hill': 7, 'Austin Peay': 8, 'Oakland City': 9, 'Ball St': 10, 'Indiana St': 11, 
