@@ -4,5 +4,6 @@ python:
 script:
  - python -m unittest tests.testMasseyMethod
  - python -m unittest tests.testDataCollection
+ - python -m unittest tests.testDriver
 after_success:
  - codecov # submit coverage
