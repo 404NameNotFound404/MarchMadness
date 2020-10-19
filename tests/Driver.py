@@ -1,6 +1,6 @@
 import numpy as np
-import MasseyMethod
-import DataCollection
+import tests.MasseyMethod
+import tests.DataCollection
 
 class Driver:
     """
@@ -29,9 +29,9 @@ class Driver:
                     num_teams (int): the number of unique team names contained in file at location file_name
         '''
         self.fileName = file_name_p
-        data = DataCollection.DataCollection(file_name_p, num_teams_p)
+        data = tests.DataCollection.DataCollection(file_name_p, num_teams_p)
 
-        massey = MasseyMethod.MasseyMethod(data.get_games(), data.get_difference(), data.get_teams())
+        massey = tests.MasseyMethod.MasseyMethod(data.get_games(), data.get_difference(), data.get_teams())
 
         counter = 0
         for team in massey.run_method():

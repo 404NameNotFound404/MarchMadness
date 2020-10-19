@@ -1,7 +1,7 @@
 import unittest
 import numpy as np
 
-import Driver
+import tests.Driver
 
 class testDriver(unittest.TestCase):
 
@@ -27,7 +27,7 @@ class testDriver(unittest.TestCase):
 
         self.teams = {"D": 1, "F": 2, "G": 3, "J": 4, "M": 5}
 
-        self.whitepaper = Driver.Driver('/data/whitepaper-example.csv', 5)
+        self.whitepaper = tests.Driver.Driver('data/whitepaper-example.csv', 5)
     
     def test_getResultsLength(self):
         self.assertEqual(len(self.whitepaper.get_results().keys()), 5)
