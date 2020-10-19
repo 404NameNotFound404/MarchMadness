@@ -1,6 +1,5 @@
 import unittest
 import tests.DataCollection
-import data
 import numpy as np
 
 class testDataCollection(unittest.TestCase):
