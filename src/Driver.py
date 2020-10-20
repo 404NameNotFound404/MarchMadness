@@ -1,7 +1,7 @@
 import numpy as np
-import MasseyMethod
-import DataCollection
-import DataCollectionHomeTeam
+import src.MasseyMethod
+import src.DataCollection
+import src.DataCollectionHomeTeam
 
 
 class Driver:
@@ -36,9 +36,9 @@ class Driver:
         self.fileName = file_name_p
 
         # collect data from file
-        data = DataCollection.DataCollection(file_name_p, num_teams_p, home_team_p)
+        data = src.DataCollection.DataCollection(file_name_p, num_teams_p, home_team_p)
 
-        massey = MasseyMethod.MasseyMethod(data.get_games(), data.get_difference(), data.get_teams())
+        massey = src.MasseyMethod.MasseyMethod(data.get_games(), data.get_difference(), data.get_teams())
 
         counter = 0
         final_rankings = massey.run_method()
@@ -58,7 +58,7 @@ class Driver:
     
 
 
-full_file = Driver('/Users/katiemendel1/Desktop/MarchMadness/tests/data/mcb2019CSV.csv', 648, True)
+#full_file = Driver('/Users/katiemendel1/Desktop/MarchMadness/tests/data/mcb2019CSV.csv', 648, True)
 #whitepaper = Driver('/Users/katiemendel1/Desktop/MarchMadness/tests/data/whitepaper-example.csv', 5)
 
-print(full_file.get_results())
+#print(full_file.get_results())

@@ -4,9 +4,9 @@ import numpy as np
 
 class testDataCollection(unittest.TestCase):
 	def setUp(self):
-		self.short_csv = src.DataCollection.DataCollection('data/mcb2019CSV-Less.csv', 200, False)
-		self.whitepaper_data = src.DataCollection.DataCollection('data/whitepaper-example.csv', 5, False)
-		self.whitepaper_home_team = src.DataCollection.DataCollection('data/whitepaper-example.csv', 5, True)
+		self.short_csv = src.DataCollection.DataCollection('src/tests/data/mcb2019CSV-Less.csv', 200, False)
+		self.whitepaper_data = src.DataCollection.DataCollection('src/tests/data/whitepaper-example.csv', 5, False)
+		self.whitepaper_home_team = src.DataCollection.DataCollection('src/tests/data/whitepaper-example.csv', 5, True)
 
 		self.teams_dict = {'South Florida': 0, 'Alabama A&M': 1, 'Iowa St': 2, 'Alabama St': 3, 'Tulsa': 4, 'Alcorn St': 5, 
 		'Appalachian St': 6, 'Mars Hill': 7, 'Austin Peay': 8, 'Oakland City': 9, 'Ball St': 10, 'Indiana St': 11, 
