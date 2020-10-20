@@ -79,6 +79,8 @@ class DataCollectionModified:
             csv_reader = reader(read_obj)
             count = 0
             # Iterate over each row in the csv using reader object
+            countT = 0
+
             for row in csv_reader:
                 assert(len(row) == 5)
                 # row variable is a list that represents a row in csv
@@ -94,17 +96,39 @@ class DataCollectionModified:
                         count += 1
                 
                 #MODIFY HERE FOR HOME TEAM ADVANTAGE
+                
 
-                if differential > 0:
+                if differential > 0 and '@' in row[3]:
+                    #print("LOSS 1 - home team: " + team_name)
+                    g[self.teams.get(team_name)] = -1 * 1.2
+                    g[self.teams.get(re.sub('@', '', row[1]))] = 1 * 1.2
+
+                    countT += 1
+                    
+                elif differential > 0 and '@' not in row[3]:
+                    #print("WIN 1 - home team:" + team_name)
                     g[self.teams.get(team_name)] = -1
                     g[self.teams.get(re.sub('@', '', row[1]))] = 1
-                    
+                
                 else:
-                    g[self.teams.get(team_name)] = 1
-                    g[self.teams.get(re.sub('@', '', row[1]))] = -1
-                    #print(re.sub('@', '', row[1]))
+                    raise Exception("File format not expected - differential must be positive")
+
+
                 self.games.append(g)
                 self.difference.append(abs(differential))
+
+                """
+                #MODIFY HERE FOR TEMPORALIZED
+                
+
+                for row in self.games:
+                    if(np.array(g).nonzero()[0].all() != np.array(row).nonzero()[0].all()):
+                        continue
+                    else:
+                        print(row)
+                        row = g
+                        #self.games = self.games[0:len(self.games),]
+                """
             
             self.games = np.array(self.games)
             self.difference = np.array(self.difference)
@@ -148,4 +172,6 @@ class DataCollectionModified:
         return self.numTeams
 
 
-
+print("Starting...")
+data_coll = DataCollectionModified("/Users/katiemendel1/Desktop/MarchMadness/tests/data/mcb2019CSV.csv", 648)
+print("Done")

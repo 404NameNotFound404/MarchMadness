@@ -43,7 +43,7 @@ class MasseyMethod:
             Parameters:
                     left_side (np.array): An array that contains a row for each game played with 1 in winning team column and -1 in losing team column
                     right_side (np.array): An array that contains a row for each game played with the absolute value of the score differential
-                    t (dict): A dictionary containing the team names as keys and the index as value
+                    teams_p (dict): A dictionary containing the team names as keys and the index as value
         '''
         self.a = left_side_p
         self.y = right_side_p

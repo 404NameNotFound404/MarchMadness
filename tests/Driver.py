@@ -34,7 +34,9 @@ class Driver:
         massey = tests.MasseyMethod.MasseyMethod(data.get_games(), data.get_difference(), data.get_teams())
 
         counter = 0
-        for team in massey.run_method():
+        final_rankings = massey.run_method()
+
+        for team in final_rankings:
             counter += 1
             self.results[str(team)] = counter
 
@@ -49,7 +51,7 @@ class Driver:
     
 
 
-#full_file = Driver('/Users/katiemendel1/Desktop/MarchMadness/misc-files/mcb2019CSV.csv', 648)
-#whitepaper = Driver('/Users/katiemendel1/Desktop/MarchMadness/misc-files/whitepaper-example.csv', 5)
+#full_file = Driver('/Users/katiemendel1/Desktop/MarchMadness/tests/data/mcb2019CSV.csv', 648)
+#whitepaper = Driver('/Users/katiemendel1/Desktop/MarchMadness/tests/data/whitepaper-example.csv', 5)
 
-#print(whitepaper.getResults())
+#print(full_file.get_results())
