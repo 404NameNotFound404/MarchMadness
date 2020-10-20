@@ -2,8 +2,10 @@ language: python
 python:
  - "3.7"
 script:
- - python -m unittest tests.testMasseyMethod
- - python -m unittest tests.testDataCollection
- - python -m unittest tests.testDriver
+ - python -m unittest src.tests.testMasseyMethod
+ - python -m unittest src.tests.testDataCollection
+ - python -m unittest src.tests.testDriver
+
 after_success:
- - codecov # submit coverage
+ - coverage run -m unittest discover
+ - coverage report > src.tests.codecov.txt
