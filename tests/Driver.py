@@ -1,6 +1,8 @@
 import numpy as np
 import tests.MasseyMethod
 import tests.DataCollection
+import tests.DataCollectionHomeTeam
+
 
 class Driver:
     """
@@ -29,7 +31,12 @@ class Driver:
                     num_teams (int): the number of unique team names contained in file at location file_name
         '''
         self.fileName = file_name_p
+
+        # analyze data as is
         data = tests.DataCollection.DataCollection(file_name_p, num_teams_p)
+
+        # analyze with home team advantage
+        #data = DataCollectionHomeTeam.DataCollectionHomeTeam(file_name_p, num_teams_p)
 
         massey = tests.MasseyMethod.MasseyMethod(data.get_games(), data.get_difference(), data.get_teams())
 

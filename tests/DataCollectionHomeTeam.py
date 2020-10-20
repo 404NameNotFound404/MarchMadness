@@ -4,7 +4,7 @@ from csv import reader
 import re
 # open file in read mode
 
-class DataCollectionModified:
+class DataCollectionHomeTeam:
 
     """
     A class to load a file to be used by the MassyMethod class.
@@ -25,7 +25,7 @@ class DataCollectionModified:
     difference : np.array
         An array that has the difference in scores of every game
 
-    numTeams : int
+    num_teams : int
         The number of teams in the file
 
 
@@ -35,7 +35,7 @@ class DataCollectionModified:
     __init__(numTeams):
         Sets instance variables.
 
-    readFile(file_path):
+    read_file(file_path):
         Reads file of games and sets games, teams and difference variables.
 
     getters()
@@ -47,10 +47,10 @@ class DataCollectionModified:
     games = []
     teams = {}
     difference = []
-    numTeams = 0
+    num_teams = 0
     file = ''
 
-    def __init__(self, file_name, num_teams):
+    def __init__(self, file_name_p, num_teams_p):
         '''
         Constructor for DataCollection class
 
@@ -60,13 +60,13 @@ class DataCollectionModified:
         self.games = []
         self.teams = {}
         self.difference = []
-        self.numTeams = num_teams
-        self.file = file_name
+        self.num_teams = num_teams_p
+        self.file = file_name_p
 
-        self.readFile(file_name, num_teams)
+        self.read_file(file_name_p, num_teams_p)
 
 
-    def readFile(self, file_path, numTeams):
+    def read_file(self, file_path_p, num_teams_p):
         '''
         Read information from specified csv file and put information into corresponding instance variables.
 
@@ -74,7 +74,7 @@ class DataCollectionModified:
                     file_path (String): Location of csv file containing information on games played between teams to be ranked. Each game is stored
                         in a separate row contining date, team names and points for each team
         '''
-        with open(file_path, 'r') as read_obj:
+        with open(file_path_p, 'r') as read_obj:
             # pass the file object to reader() to get the reader object
             csv_reader = reader(read_obj)
             count = 0
@@ -84,7 +84,7 @@ class DataCollectionModified:
             for row in csv_reader:
                 assert(len(row) == 5)
                 # row variable is a list that represents a row in csv
-                g = [0] * numTeams
+                g = [0] * num_teams_p
                 differential = 0
                 team_name = ''
                 for x in [1, 3]:
@@ -95,23 +95,32 @@ class DataCollectionModified:
                         self.teams[team_name] = count
                         count += 1
                 
-                #MODIFY HERE FOR HOME TEAM ADVANTAGE
-                
+                # modify for home team advantage
 
                 if differential > 0 and '@' in row[3]:
                     #print("LOSS 1 - home team: " + team_name)
-                    g[self.teams.get(team_name)] = -1 * 1.2
-                    g[self.teams.get(re.sub('@', '', row[1]))] = 1 * 1.2
-
-                    countT += 1
+                    g[self.teams.get(team_name)] = -1
+                    g[self.teams.get(re.sub('@', '', row[1]))] = 1
+                    differential *= 1.2
+                    
                     
                 elif differential > 0 and '@' not in row[3]:
                     #print("WIN 1 - home team:" + team_name)
                     g[self.teams.get(team_name)] = -1
                     g[self.teams.get(re.sub('@', '', row[1]))] = 1
                 
+                elif differential < 0 and '@' in row[3]:
+                    g[self.teams.get(team_name)] = 1
+                    g[self.teams.get(re.sub('@', '', row[1]))] = -1
+
+                elif differential < 0 and '@' not in row[3]:
+                    g[self.teams.get(team_name)] = 1
+                    g[self.teams.get(re.sub('@', '', row[1]))] = -1
+                    differential *= 1.2
+
                 else:
-                    raise Exception("File format not expected - differential must be positive")
+                    raise Exception("Invalid file format")
+                    
 
 
                 self.games.append(g)
@@ -134,7 +143,7 @@ class DataCollectionModified:
             self.difference = np.array(self.difference)
 
 
-    def getTeams(self):
+    def get_teams(self):
         '''
         Accessor method to get teams represented in the specified file along with index information in games array.
 
@@ -143,7 +152,7 @@ class DataCollectionModified:
         '''
         return self.teams
 
-    def getDifference(self):
+    def get_difference(self):
         '''
         Accessor method to get score differentials for each game.
 
@@ -152,7 +161,7 @@ class DataCollectionModified:
         '''
         return self.difference
 
-    def getGames(self):
+    def get_games(self):
         '''
         Accessor method to get game array representation for the input file.
 
@@ -162,16 +171,11 @@ class DataCollectionModified:
         '''
         return self.games
 
-    def getNumTeams(self):
+    def get_num_teams(self):
         '''
         Accessor method to get number of teams.
 
             Returns:
-                    numTeams (int): Number of unique teams in the input file.
+                    num_teams (int): Number of unique teams in the input file.
         '''
-        return self.numTeams
-
-
-print("Starting...")
-data_coll = DataCollectionModified("/Users/katiemendel1/Desktop/MarchMadness/tests/data/mcb2019CSV.csv", 648)
-print("Done")
+        return self.num_teams
