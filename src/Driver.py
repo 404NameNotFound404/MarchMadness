@@ -1,7 +1,6 @@
 import numpy as np
 import src.MasseyMethod
 import src.DataCollection
-import src.DataCollectionHomeTeam
 
 
 class Driver:
