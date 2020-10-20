@@ -27,7 +27,7 @@ class testDriver(unittest.TestCase):
 
         self.teams = {"D": 1, "F": 2, "G": 3, "J": 4, "M": 5}
 
-        self.whitepaper = src.Driver.Driver('src/data/whitepaper-example.csv', 5)
+        self.whitepaper = src.Driver.Driver('src/data/whitepaper-example.csv', 5, False)
     
     def test_getResultsLength(self):
         self.assertEqual(len(self.whitepaper.get_results().keys()), 5)
