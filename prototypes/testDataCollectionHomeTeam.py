@@ -1,11 +1,11 @@
 import unittest
-import tests.DataCollection
+import tests.DataCollectionHomeTeam
 import numpy as np
 
-class testDataCollection(unittest.TestCase):
+class testDataCollectionHomeTeam(unittest.TestCase):
 	def setUp(self):
-		self.short_csv = tests.DataCollection.DataCollection('tests/data/mcb2019CSV-Less.csv', 200)
-		self.whitepaper_data = tests.DataCollection.DataCollection('tests/data/whitepaper-example.csv', 5)
+		self.short_csv = tests.DataCollectionHomeTeam.DataCollectionHomeTeam('data/mcb2019CSV-Less.csv', 200)
+		self.whitepaper_data = tests.DataCollectionHomeTeam.DataCollectionHomeTeam('data/whitepaper-example.csv', 5)
 
 		self.teams_dict = {'South Florida': 0, 'Alabama A&M': 1, 'Iowa St': 2, 'Alabama St': 3, 'Tulsa': 4, 'Alcorn St': 5, 
 		'Appalachian St': 6, 'Mars Hill': 7, 'Austin Peay': 8, 'Oakland City': 9, 'Ball St': 10, 'Indiana St': 11, 
@@ -54,7 +54,7 @@ class testDataCollection(unittest.TestCase):
         [1, 0, -1, 0, 0], [0, 1, 0, -1, 0], [0, 0, 0, 1, -1], \
         [0, -1, 1, 0, 0]])
 
-		self.wp_y = np.array([32, 8, 25, 49, 14, 7, 10, 2, 42, 7])
+		self.wp_home_team_y = np.array([32, 8*1.2, 25*1.2, 49, 14*1.2, 7, 10*1.2, 2, 42, 7])
 
 	def test_team_content(self):		
 		for team in self.teams_dict.keys():
@@ -80,23 +80,5 @@ class testDataCollection(unittest.TestCase):
 
 	def test_game_content(self):
 		self.assertEqual(self.wp_games.all(), self.whitepaper_data.get_games().all())
-		iowa_vs_alabama = [0] * 200
-		iowa_vs_alabama[self.teams_dict['Iowa St']] = 1
-		iowa_vs_alabama[self.teams_dict['Alabama St']] = -1
-		self.assertEqual(self.short_csv.get_games()[1].all(), np.array(iowa_vs_alabama).all())
-
-		for game in self.short_csv.get_games():
-			count_win = 0
-			count_loss = 0
-			for entry in game:
-				if(entry == 1):
-					count_win += 1
-				elif(entry == -1):
-					count_loss += 1
-				else:
-					self.assertEqual(entry, 0)
-
-			self.assertTrue(count_win == 1)
-			self.assertTrue(count_loss == 1)
 
 		

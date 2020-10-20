@@ -30,12 +30,15 @@ class DataCollection:
     file : String
         Filepath to csv containing game information.
 
+    modified : boolean
+        True if method should be calculated taking into consideration home team advantage.
+
     Methods
     -------
-    __init__(num_teams):
+    __init__(num_teams_p, home_team_p):
         Sets instance variables.
 
-    read_file(file_path):
+    read_file(file_path_p, num_teams_p, home_team_p):
         Reads file of games and sets games, teams and difference variables.
 
     get_teams():
@@ -56,20 +59,23 @@ class DataCollection:
     difference = []
     num_teams = 0
     file = ''
+    modified = False
 
-    def __init__(self, file_name_p, num_teams_p):
+    def __init__(self, file_name_p, num_teams_p, home_team_p):
         '''
         Constructor for DataCollection class
 
             Parameters:
                     num_teams (int): Number of unique teams from file
+
+                    home_team_p (boolean): True if data should take into account home team advantage
         '''
         self.games = []
         self.teams = {}
         self.difference = []
         self.num_teams = num_teams_p
         self.file = file_name_p
-
+        self.modified = home_team_p
         self.read_file(file_name_p, num_teams_p)
 
 
@@ -80,6 +86,8 @@ class DataCollection:
             Parameters:
                     file_path (String): Location of csv file containing information on games played between teams to be ranked. Each game is stored
                         in a separate row contining date, team names and points for each team
+                    
+                    num_team_p (int): Number of unique team names in the file to be read
         '''
         with open(file_path_p, 'r') as read_obj:
             # pass the file object to reader() to get the reader object
@@ -88,7 +96,7 @@ class DataCollection:
             # iterate over each row in the csv using reader object
             for row in csv_reader:
                 assert(len(row) == 5)
-                # row variable is a list that represents a row in csv
+                # define row variable that is a list that represents a row in csv
                 g = [0] * num_team_p
                 differential = 0
                 team_name = ''
@@ -99,16 +107,48 @@ class DataCollection:
                     if team_name not in self.teams.keys():
                         self.teams[team_name] = count
                         count += 1
-                if differential > 0:
-                    g[self.teams.get(team_name)] = -1
-                    g[self.teams.get(re.sub('@', '', row[1]))] = 1
+
+                if(self.modified):
+                    # take into consideratin home team advantage
+                    if differential > 0 and '@' in row[3]:
+                        # use multiplier for home team loss
+                        g[self.teams.get(team_name)] = -1
+                        g[self.teams.get(re.sub('@', '', row[1]))] = 1
+                        differential *= 1.2
                     
+                    elif differential > 0 and '@' not in row[3]:
+                        # leave data as is for home team win
+                        g[self.teams.get(team_name)] = -1
+                        g[self.teams.get(re.sub('@', '', row[1]))] = 1
+                    
+                    elif differential < 0 and '@' in row[3]:
+                        # leave data as is for home team win
+                        g[self.teams.get(team_name)] = 1
+                        g[self.teams.get(re.sub('@', '', row[1]))] = -1
+
+                    elif differential < 0 and '@' not in row[3]:
+                        # use multiplier for home team loss
+                        g[self.teams.get(team_name)] = 1
+                        g[self.teams.get(re.sub('@', '', row[1]))] = -1
+                        differential *= 1.2
+                    else:
+                        raise Exception("Invalid file format")
+
                 else:
-                    g[self.teams.get(team_name)] = 1
-                    g[self.teams.get(re.sub('@', '', row[1]))] = -1
+                    # do not take into consideration home team advantage
+                    if differential > 0:
+                        # record first team win
+                        g[self.teams.get(team_name)] = -1
+                        g[self.teams.get(re.sub('@', '', row[1]))] = 1
+                        
+                    else:
+                        # record second team won
+                        g[self.teams.get(team_name)] = 1
+                        g[self.teams.get(re.sub('@', '', row[1]))] = -1
                 self.games.append(g)
                 self.difference.append(abs(differential))
             
+            # update game and differential instance variables
             self.games = np.array(self.games)
             self.difference = np.array(self.difference)
 

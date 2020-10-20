@@ -1,7 +1,7 @@
 import numpy as np
-import tests.MasseyMethod
-import tests.DataCollection
-import tests.DataCollectionHomeTeam
+import MasseyMethod
+import DataCollection
+import DataCollectionHomeTeam
 
 
 class Driver:
@@ -22,23 +22,23 @@ class Driver:
     """
     results = {}
 
-    def __init__(self, file_name_p, num_teams_p):
+    def __init__(self, file_name_p, num_teams_p, home_team_p):
         '''
         Constructor for Driver class
 
             Parameters:
                     file_name (String): file path to csv containing game information
+
                     num_teams (int): the number of unique team names contained in file at location file_name
+
+                    home_team_p (boolean): True if data should take into account home team advantage
         '''
         self.fileName = file_name_p
 
-        # analyze data as is
-        data = tests.DataCollection.DataCollection(file_name_p, num_teams_p)
+        # collect data from file
+        data = DataCollection.DataCollection(file_name_p, num_teams_p, home_team_p)
 
-        # analyze with home team advantage
-        #data = DataCollectionHomeTeam.DataCollectionHomeTeam(file_name_p, num_teams_p)
-
-        massey = tests.MasseyMethod.MasseyMethod(data.get_games(), data.get_difference(), data.get_teams())
+        massey = MasseyMethod.MasseyMethod(data.get_games(), data.get_difference(), data.get_teams())
 
         counter = 0
         final_rankings = massey.run_method()
@@ -58,7 +58,7 @@ class Driver:
     
 
 
-#full_file = Driver('/Users/katiemendel1/Desktop/MarchMadness/tests/data/mcb2019CSV.csv', 648)
+full_file = Driver('/Users/katiemendel1/Desktop/MarchMadness/tests/data/mcb2019CSV.csv', 648, True)
 #whitepaper = Driver('/Users/katiemendel1/Desktop/MarchMadness/tests/data/whitepaper-example.csv', 5)
 
-#print(full_file.get_results())
+print(full_file.get_results())
